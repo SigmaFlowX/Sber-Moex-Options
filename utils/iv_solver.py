@@ -15,3 +15,8 @@ def standard_normal_pdf(x:float) -> float:
 def call_price(s:float, k:float, r:float, sigma:float, t:float):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
     return s * standard_normal_cdf(d1) - k * math.exp(-r*t) * standard_normal_cdf(d2)
+
+def put_price(s:float, k:float, r:float, sigma:float, t:float):
+    d1, d2 = d_1_d2(s, k, r, sigma, t)
+    return k * math.exp(-r*t) * standard_normal_cdf(-d2) - s * standard_normal_cdf(-d1)
+
