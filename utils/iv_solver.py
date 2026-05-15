@@ -48,3 +48,6 @@ def theta(s:float, k:float, r:float, sigma:float, t:float, type:str):
         return -(s*standard_normal_pdf(d1) * sigma)/(2*math.sqrt(t)) + r*k*math.exp(-r*t)*standard_normal_cdf(-d2)
     else:
         raise Exception("invalid option type")
+
+def greek_black_scholes(theta:float, gamma:float, delta: float, sigma:float, r:float, s:float, v:float):
+    return theta + sigma*sigma*s*s*gamma / 2 + r * s * delta - r * v
