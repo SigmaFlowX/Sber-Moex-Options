@@ -12,21 +12,21 @@ def standard_normal_cdf(x:float) -> float:
 def standard_normal_pdf(x:float) -> float:
     return math.exp(-0.5 * x * x) / math.sqrt(2.0 * math.pi)
 
-def price(s:float, k:float, r:float, sigma:float, t:float, type:str):
+def price(s:float, k:float, r:float, sigma:float, t:float, option_type:str):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
-    if type == "CALL":
+    if option_type == "CALL":
         return s * standard_normal_cdf(d1) - k * math.exp(-r*t) * standard_normal_cdf(d2)
-    elif type == "PUT":
+    elif option_type == "PUT":
         return k * math.exp(-r * t) * standard_normal_cdf(-d2) - s * standard_normal_cdf(-d1)
     else:
         raise Exception("invalid option type")
 
-def delta(s:float, k:float, r:float, sigma:float, t:float, type:str):
+def delta(s:float, k:float, r:float, sigma:float, t:float, option_type:str):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
     y = standard_normal_cdf(d1)
-    if type == "CALL":
+    if option_type == "CALL":
         return y
-    elif type == "PUT":
+    elif option_type == "PUT":
         return y-1
     else:
         raise Exception("invalid option type")
@@ -39,12 +39,12 @@ def vega(s:float, k:float, r:float, sigma:float, t:float):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
     return s * standard_normal_pdf(d1) * math.sqrt(t)
 
-def theta(s:float, k:float, r:float, sigma:float, t:float, type:str):
+def theta(s:float, k:float, r:float, sigma:float, t:float, option_type:str):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
 
-    if type == "CALL":
+    if option_type == "CALL":
         return -(s*standard_normal_pdf(d1) * sigma)/(2*math.sqrt(t)) - r*k*math.exp(-r*t)*standard_normal_cdf(d2)
-    elif type == "PUT":
+    elif option_type == "PUT":
         return -(s*standard_normal_pdf(d1) * sigma)/(2*math.sqrt(t)) + r*k*math.exp(-r*t)*standard_normal_cdf(-d2)
     else:
         raise Exception("invalid option type")
