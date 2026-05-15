@@ -30,3 +30,6 @@ def delta(s:float, k:float, r:float, sigma:float, t:float, type:str):
     else:
         raise Exception("invalid option type")
 
+def gamma(s:float, k:float, r:float, sigma:float, t:float):
+    d1, d2 = d_1_d2(s, k, r, sigma, t)
+    return standard_normal_pdf(d1)/(s * sigma * math.sqrt(t))
