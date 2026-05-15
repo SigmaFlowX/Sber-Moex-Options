@@ -38,3 +38,13 @@ def gamma(s:float, k:float, r:float, sigma:float, t:float):
 def vega(s:float, k:float, r:float, sigma:float, t:float):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
     return s * standard_normal_pdf(d1) * math.sqrt(t)
+
+def theta(s:float, k:float, r:float, sigma:float, t:float, type:str):
+    d1, d2 = d_1_d2(s, k, r, sigma, t)
+
+    if type == "CALL":
+        return -(s*standard_normal_pdf(d1) * sigma)/(2*math.sqrt(t)) - r*k*math.exp(-r*t)*standard_normal_cdf(d2)
+    elif type == "PUT":
+        return -(s*standard_normal_pdf(d1) * sigma)/(2*math.sqrt(t)) + r*k*math.exp(-r*t)*standard_normal_cdf(-d2)
+    else:
+        raise Exception("invalid option type")
