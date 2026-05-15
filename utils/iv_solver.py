@@ -12,13 +12,14 @@ def standard_normal_cdf(x:float) -> float:
 def standard_normal_pdf(x:float) -> float:
     return math.exp(-0.5 * x * x) / math.sqrt(2.0 * math.pi)
 
-def call_price(s:float, k:float, r:float, sigma:float, t:float):
+def call_price(s:float, k:float, r:float, sigma:float, t:float, type:str):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
-    return s * standard_normal_cdf(d1) - k * math.exp(-r*t) * standard_normal_cdf(d2)
-
-def put_price(s:float, k:float, r:float, sigma:float, t:float):
-    d1, d2 = d_1_d2(s, k, r, sigma, t)
-    return k * math.exp(-r*t) * standard_normal_cdf(-d2) - s * standard_normal_cdf(-d1)
+    if type == "CALL":
+        return s * standard_normal_cdf(d1) - k * math.exp(-r*t) * standard_normal_cdf(d2)
+    elif type == "PUT":
+        return k * math.exp(-r * t) * standard_normal_cdf(-d2) - s * standard_normal_cdf(-d1)
+    else:
+        raise Exception("invalid option type")
 
 def delta(s:float, k:float, r:float, sigma:float, t:float, type:str):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
