@@ -49,5 +49,5 @@ def theta(s:float, k:float, r:float, sigma:float, t:float, option_type:str):
     else:
         raise Exception("invalid option type")
 
-def greek_black_scholes(theta:float, gamma:float, delta: float, sigma:float, r:float, s:float, v:float):
-    return theta + sigma*sigma*s*s*gamma / 2 + r * s * delta - r * v
+def greek_black_scholes(theta_val:float, gamma_val:float, delta_val: float, sigma:float, r:float, s:float, v:float):
+    return theta_val + sigma*sigma*s*s*gamma_val / 2 + r * s * delta_val - r * v
