@@ -33,3 +33,7 @@ def delta(s:float, k:float, r:float, sigma:float, t:float, type:str):
 def gamma(s:float, k:float, r:float, sigma:float, t:float):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
     return standard_normal_pdf(d1)/(s * sigma * math.sqrt(t))
+
+def vega(s:float, k:float, r:float, sigma:float, t:float):
+    d1, d2 = d_1_d2(s, k, r, sigma, t)
+    return s * standard_normal_pdf(d1) * math.sqrt(t)
