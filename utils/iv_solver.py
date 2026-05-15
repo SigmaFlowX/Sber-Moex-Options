@@ -20,3 +20,13 @@ def put_price(s:float, k:float, r:float, sigma:float, t:float):
     d1, d2 = d_1_d2(s, k, r, sigma, t)
     return k * math.exp(-r*t) * standard_normal_cdf(-d2) - s * standard_normal_cdf(-d1)
 
+def delta(s:float, k:float, r:float, sigma:float, t:float, type:str):
+    d1, d2 = d_1_d2(s, k, r, sigma, t)
+    y = standard_normal_cdf(d1)
+    if type == "CALL":
+        return y
+    elif type == "PUT":
+        return y-1
+    else:
+        raise Exception("invalid option type")
+
