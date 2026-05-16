@@ -74,10 +74,10 @@ def iv_newton(s:float, k:float, r:float, t:float, market_price: float, option_ty
 def main():
     import time
 
-    s = 323.0
+    s = 323.57
     k = 320.0
     r = 0.13
-    t = 11.0/365.0
+    t = 4.0/365.0
     option_type = "CALL"
     eps = 0.0001
     market_price = 4.77
