@@ -71,3 +71,17 @@ def iv_newton(s:float, k:float, r:float, t:float, option_type:str, eps: float, m
 
     raise ValueError("Newton method did not converge in given max_iter")
 
+
+def main():
+    s = 323.0
+    k = 320.0
+    r = 0.13
+    t = 11.0/365.0
+    option_type = "CALL"
+    eps = 0.0001
+    max_iter = 100
+
+    iv = iv_newton(s, k, r, t, option_type, eps, max_iter)
+    print(iv)
+if __name__ == "__main__":
+    main()
