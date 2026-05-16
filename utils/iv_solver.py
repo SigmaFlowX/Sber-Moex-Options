@@ -91,7 +91,7 @@ def main():
     execution_time = end_time - start_time
 
     print(iv)
-    print(execution_time)
+    print(f"Execution time: {execution_time * 1000} ms")
 
 if __name__ == "__main__":
     main()
