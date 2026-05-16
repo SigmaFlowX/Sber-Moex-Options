@@ -66,7 +66,6 @@ def iv_newton(s:float, k:float, r:float, t:float, market_price: float, option_ty
 
         if abs(sigma_n - sigma_np1) < eps:
             return sigma_np1
-        print(_)
         sigma_n = sigma_np1
 
     raise ValueError("Newton method did not converge in given max_iter")
