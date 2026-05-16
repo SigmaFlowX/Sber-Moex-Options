@@ -53,7 +53,7 @@ def greek_black_scholes(theta_val:float, gamma_val:float, delta_val: float, sigm
     return theta_val + sigma*sigma*s*s*gamma_val / 2 + r * s * delta_val - r * v
 
 
-def iv_newton(s:float, k:float, r:float, t:float, option_type:str, eps: float, max_iter: int) -> float:
+def iv_newton(s:float, k:float, r:float, t:float, market_price: float, option_type:str, eps: float, max_iter: int) -> float:
 
     sigma_n = 0.2
     for _ in range(max_iter):
@@ -62,7 +62,7 @@ def iv_newton(s:float, k:float, r:float, t:float, option_type:str, eps: float, m
             raise ValueError("Vega is close to zero, Newton method is unstable")
         price_val = price(s, k, r, sigma_n, t, option_type)
 
-        sigma_np1 = sigma_n - price_val/vega_val
+        sigma_np1 = sigma_n - (price_val - market_price)/vega_val
 
         if abs(sigma_n - sigma_np1) < eps:
             return sigma_np1
@@ -79,9 +79,10 @@ def main():
     t = 11.0/365.0
     option_type = "CALL"
     eps = 0.0001
+    market_price = 4.77
     max_iter = 100
 
-    iv = iv_newton(s, k, r, t, option_type, eps, max_iter)
+    iv = iv_newton(s, k, r, t,market_price, option_type,eps, max_iter)
     print(iv)
 if __name__ == "__main__":
     main()
