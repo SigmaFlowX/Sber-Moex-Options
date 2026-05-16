@@ -51,3 +51,23 @@ def theta(s:float, k:float, r:float, sigma:float, t:float, option_type:str):
 
 def greek_black_scholes(theta_val:float, gamma_val:float, delta_val: float, sigma:float, r:float, s:float, v:float):
     return theta_val + sigma*sigma*s*s*gamma_val / 2 + r * s * delta_val - r * v
+
+
+def iv_newton(s:float, k:float, r:float, t:float, option_type:str, eps: float, max_iter: int) -> float:
+
+    sigma_n = 0.2
+    for _ in range(max_iter):
+        vega_val = vega(s, k, r, sigma_n, t)
+        if vega_val < 1e-10:
+            raise ValueError("Vega is close to zero, Newton method is unstable")
+        price_val = price(s, k, r, sigma_n, t, option_type)
+
+        sigma_np1 = sigma_n - price_val/vega_val
+
+        if abs(sigma_n - sigma_np1) < eps:
+            return sigma_np1
+
+        sigma_n = sigma_np1
+
+    raise ValueError("Newton method did not converge in given max_iter")
+
