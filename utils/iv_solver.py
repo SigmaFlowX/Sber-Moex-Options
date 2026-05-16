@@ -66,13 +66,15 @@ def iv_newton(s:float, k:float, r:float, t:float, market_price: float, option_ty
 
         if abs(sigma_n - sigma_np1) < eps:
             return sigma_np1
-
+        print(_)
         sigma_n = sigma_np1
 
     raise ValueError("Newton method did not converge in given max_iter")
 
 
 def main():
+    import time
+
     s = 323.0
     k = 320.0
     r = 0.13
@@ -82,7 +84,15 @@ def main():
     market_price = 4.77
     max_iter = 100
 
+    start_time = time.perf_counter()
+
     iv = iv_newton(s, k, r, t,market_price, option_type,eps, max_iter)
+
+    end_time = time.perf_counter()
+    execution_time = end_time - start_time
+
     print(iv)
+    print(execution_time)
+
 if __name__ == "__main__":
     main()
