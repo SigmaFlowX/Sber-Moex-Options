@@ -34,6 +34,9 @@ def extract_data_from_ticker(ticker:str):
 
     return option_type, expiry_date
 
+def main():
+    ticker = "SR330CQ6D"
+    print(extract_data_from_ticker(ticker))
 
-ticker = "SR330CQ6D"
-print(extract_data_from_ticker(ticker))
+if __name__ == "__main__":
+    main()
