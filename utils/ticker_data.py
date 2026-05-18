@@ -15,7 +15,7 @@ def nth_weekday(year: int, month: int, weekday: int, n: int):
 def extract_data_from_ticker(ticker:str):
 
     month = ticker[6]
-    year = ticker[7]
+    year = int(ticker[7]) + 2020
     week = week_arr.index(ticker[8]) + 1 if ticker[8] else 3 #month-option
 
 
@@ -25,8 +25,15 @@ def extract_data_from_ticker(ticker:str):
     elif month in put_month_arr:
         option_type = "PUT"
         month = put_month_arr.index(month) + 1
+    else:
+        raise ValueError("Could not determine the month")
 
+    day = nth_weekday(year, month, calendar.WEDNESDAY, week)
+
+    expiry_date = datetime(year, month, day)
+
+    return option_type, expiry_date
 
 
 ticker = "SR330CQ6D"
-extract_data_from_ticker(ticker)
+print(extract_data_from_ticker(ticker))
