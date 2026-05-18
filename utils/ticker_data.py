@@ -16,7 +16,7 @@ def extract_data_from_ticker(ticker:str):
 
     month = ticker[6]
     year = int(ticker[7]) + 2020
-    week = week_arr.index(ticker[8]) + 1 if ticker[8] else 3 #month-option
+    week = week_arr.index(ticker[8]) + 1 if len(ticker) >=9 else 3 #month-option
 
 
     if month in call_month_arr:
@@ -35,7 +35,7 @@ def extract_data_from_ticker(ticker:str):
     return option_type, expiry_date
 
 def main():
-    ticker = "SR330CQ6D"
+    ticker = "SR320CE6"
     print(extract_data_from_ticker(ticker))
 
 if __name__ == "__main__":
