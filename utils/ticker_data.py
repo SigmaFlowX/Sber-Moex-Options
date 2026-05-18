@@ -30,7 +30,7 @@ def extract_data_from_ticker(ticker:str):
 
     day = nth_weekday(year, month, calendar.WEDNESDAY, week)
 
-    expiry_date = datetime(year, month, day)
+    expiry_date = datetime(year, month, day, 19, 0)
 
     return option_type, expiry_date
 
