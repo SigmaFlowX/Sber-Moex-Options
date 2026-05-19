@@ -53,13 +53,17 @@ def greek_black_scholes(theta_val:float, gamma_val:float, delta_val: float, sigm
     return theta_val + sigma*sigma*s*s*gamma_val / 2 + r * s * delta_val - r * v
 
 
-def iv_newton(s:float, k:float, r:float, t:float, market_price: float, option_type:str, eps: float, max_iter: int) -> float:
+def iv_newton(s:float, k:float, r:float, t:float, market_price: float, option_type:str, eps: float, max_iter: int, allow_fallback=True) -> float:
 
     sigma_n = 0.2
     for _ in range(max_iter):
         vega_val = vega(s, k, r, sigma_n, t)
         if vega_val < 1e-10:
-            raise ValueError("Vega is close to zero, Newton method is unstable")
+            if allow_fallback:
+                break
+            else:
+                raise ValueError("Vega is close to zero, Newton method is unstable")
+
         price_val = price(s, k, r, sigma_n, t, option_type)
 
         sigma_np1 = sigma_n - (price_val - market_price)/vega_val
@@ -68,7 +72,22 @@ def iv_newton(s:float, k:float, r:float, t:float, market_price: float, option_ty
             return sigma_np1
         sigma_n = sigma_np1
 
-    raise ValueError("Newton method did not converge in given max_iter")
+    #bisection method
+    a, b = 1e-6, 10.0
+
+    if (price(s, k, r, a, t, option_type) - market_price) * (price(s, k, r, b, t, option_type) - market_price) > 0:
+        raise ValueError("Backup bisection method is not applicable")
+
+    for _ in range(max_iter):
+        mid = (a + b) / 2
+        if price(s, k, r, mid, t, option_type) - market_price > 0:
+            b = mid
+        else:
+            a = mid
+        if (b - a) < eps:
+            return mid
+
+    raise ValueError("IV not found")
 
 
 def main():
