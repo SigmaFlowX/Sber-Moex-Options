@@ -4,3 +4,6 @@ numpy
 python-dotenv
 sqlalchemy
 scipy
+plotly
+psycopg2
+dotenv
