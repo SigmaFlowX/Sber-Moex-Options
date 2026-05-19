@@ -54,8 +54,8 @@ def greek_black_scholes(theta_val:float, gamma_val:float, delta_val: float, sigm
 
 
 def iv_newton(s:float, k:float, r:float, t:float, market_price: float, option_type:str, eps: float, max_iter: int, allow_fallback=True) -> float:
-
-    sigma_n = 0.2
+    sigma_n = market_price / (s * 0.4 * t ** 0.5)
+    sigma_n = max(1e-6, min(sigma_n, 10.0))
     for _ in range(max_iter):
         vega_val = vega(s, k, r, sigma_n, t)
         if vega_val < 1e-10:
