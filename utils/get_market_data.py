@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 from datetime import datetime, timedelta
 
-def get_candles(symbol, start_date, end_date, interval=10):
+def get_candles(symbol, start_date, end_date, interval=10, show=False):
     url = f"https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities/{symbol}/candles.json"
     cur_date = start_date
 
@@ -28,7 +28,8 @@ def get_candles(symbol, start_date, end_date, interval=10):
 
 
         cur_date = cur_date + timedelta(days=delta)
-        print(cur_date)
+        if show:
+            print(cur_date)
 
     duplicates_count = df.duplicated(subset=["begin"]).sum()
     df.drop_duplicates(subset=["begin"], inplace=True)
